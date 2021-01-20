@@ -4,4 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.lab5.SecondActivity"/>
+    tools:context="com.example.lab5.SecondActivity">
+
+    <Button
+        android:id="@+id/cheese_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/cheese_button_label"
+        app:layout_constraintBottom_toTopOf="@+id/rice_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="selectItem"/>
+
+    <Button
+        android:id="@+id/rice_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rice_button_label"
+        app:layout_constraintBottom_toTopOf="@+id/egg_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheese_button"
+        android:onClick="selectItem"/>
+
+    <Button
+        android:id="@+id/egg_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eggs_button_label"
+        app:layout_constraintBottom_toTopOf="@+id/water_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rice_button"
+        android:onClick="selectItem"/>
+
+    <Button
+        android:id="@+id/water_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:text="@string/water_button_label"
+        app:layout_constraintBottom_toTopOf="@+id/bread_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/egg_button"
+        android:onClick="selectItem"/>
+
+    <Button
+        android:id="@+id/bread_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bread_button_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/water_button"
+        android:onClick="selectItem"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

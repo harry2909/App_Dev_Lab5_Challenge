@@ -9,41 +9,53 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    public static final String EXTRA_MESSAGE = "com.example.lab4.MainActivity.extra.MESSAGE";
+    public static final String EXTRA_MESSAGE = "com.example.lab5.MainActivity.extra.MESSAGE";
 
-    private EditText mMessageEditText;
+    private final TextView[] item = new TextView[10];
+
+    private ArrayList<String> itemsList = new ArrayList<>(10);
 
     public static final int TEXT_REQUEST = 1;
 
-    private TextView mReplyHeadTextView;
-    private TextView mReplyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMessageEditText = findViewById(R.id.editText_main);
-        mReplyHeadTextView = findViewById(R.id.text_header_reply);
-        mReplyTextView = findViewById(R.id.text_message_reply);
+        item[0] = findViewById(R.id.item_1);
+        item[1] = findViewById(R.id.item_2);
+        item[2] = findViewById(R.id.item_3);
+        item[3] = findViewById(R.id.item_4);
+        item[4] = findViewById(R.id.item_5);
+        item[5] = findViewById(R.id.item_6);
+        item[6] = findViewById(R.id.item_7);
+        item[7] = findViewById(R.id.item_8);
+        item[8] = findViewById(R.id.item_9);
+        item[9] = findViewById(R.id.item_10);
 
-        //Restore state
-        if (savedInstanceState != null){
-            boolean isVisible = savedInstanceState.getBoolean("reply_visible");
-            if(isVisible){
-                mReplyHeadTextView.setVisibility(View.VISIBLE);
-                mReplyTextView.setText(savedInstanceState.getString("reply_text"));
-                mReplyTextView.setVisibility(View.VISIBLE);
+        if (savedInstanceState != null) {
+            itemsList = savedInstanceState.getStringArrayList("ItemsListStringArray");
+            int i;
+            if (itemsList != null && itemsList.size() > 0) {
+                for (i = 0; i < itemsList.size(); i++) {
+                    if (itemsList.size() > 10) {
+                        Toast.makeText(MainActivity.this, "Cannot add more items to the list", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    item[i].setVisibility(View.VISIBLE);
+                    item[i].setText(itemsList.get(i));
+                }
             }
+
         }
-
-
-        Log.d(LOG_TAG, "_____");
-        Log.d(LOG_TAG, "onCreate");
     }
 
     @Override
@@ -82,34 +94,39 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "onDestroy");
     }
 
-    // check to see if header is visible then put that state in bundle
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(mReplyHeadTextView.getVisibility() == View.VISIBLE){
-            outState.putBoolean("reply_visible", true);
-            outState.putString("reply_text", mReplyTextView.getText().toString());
-        }
-    }
-
     public void launchSecondActivity(View view) {
         Log.d(LOG_TAG, "Button clicked!");
         Intent intent = new Intent(this, SecondActivity.class);
-        String message = mMessageEditText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
         startActivityForResult(intent, TEXT_REQUEST);
     }
 
     @Override
-    public void onActivityResult(int requestCode,
-                                 int resultCode, Intent data) {
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (itemsList.size() != 0) {
+            outState.putStringArrayList("ItemsListStringArray", itemsList);
+        }
+    }
+
+    // method for when SecondActivity returns intent. Use an array to add the items.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TEXT_REQUEST) {
             if (resultCode == RESULT_OK) {
-                String reply = data.getStringExtra(SecondActivity.EXTRA_REPLY);
-                mReplyHeadTextView.setVisibility(View.VISIBLE);
-                mReplyTextView.setText(reply);
-                mReplyTextView.setVisibility(View.VISIBLE);
+                String itemString = data.getStringExtra(SecondActivity.EXTRA_REPLY);
+                itemsList.add(itemString); // add to arraylist
+                int i;
+                for (i = 0; i < itemsList.size(); i++) {
+                    if (itemsList.size() > 10) {
+                        Toast.makeText(MainActivity.this, "Cannot add more items to the list", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    // loop through array list and add to each index of array
+                    item[i].setVisibility(View.VISIBLE);
+                    item[i].setText(itemsList.get(i));
+                }
+
             }
         }
     }

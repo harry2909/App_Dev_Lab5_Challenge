@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Lab4</string>
+    <string name="app_name">Lab5</string>
+    <string name="add_item">Add Item</string>
+    <string name="cheese_button_label">Cheese</string>
+    <string name="rice_button_label">Rice</string>
+    <string name="eggs_button_label">Eggs</string>
+    <string name="water_button_label">Water</string>
+    <string name="bread_button_label">Bread</string>
 
 </resources>

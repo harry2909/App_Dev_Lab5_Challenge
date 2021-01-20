@@ -8,33 +8,49 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static com.example.lab5.MainActivity.EXTRA_MESSAGE;
+import static com.example.lab5.MainActivity.TEXT_REQUEST;
 
 public class SecondActivity extends AppCompatActivity {
 
-    public static final String EXTRA_REPLY = "com.example.lab4.MainActivity.extra.REPLY";
+    public static final String EXTRA_REPLY = "com.example.lab5.MainActivity.extra.REPLY";
 
     private static final String LOG_TAG = SecondActivity.class.getSimpleName();
 
-    private EditText mReply;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        mReply = findViewById(R.id.editText_second);
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        TextView textView = findViewById(R.id.text_message);
-        textView.setText(message);
     }
 
-    public void returnReply(View view) {
-        String reply = mReply.getText().toString();
-        Intent replyIntent = new Intent();
-        replyIntent.putExtra(EXTRA_REPLY, reply);
-        setResult(RESULT_OK, replyIntent);
-        Log.d(LOG_TAG, "End SecondActivity");
-        finish();
+    public void selectItem(View view) {
+        Intent return_items_intent = new Intent();
+        // Switch statements to say if it is this id, then return this string
+        switch (view.getId()){
+            case R.id.rice_button:
+                return_items_intent.putExtra(EXTRA_REPLY, "Rice"); setResult(RESULT_OK, return_items_intent); finish();
+                break;
+            case R.id.bread_button:
+                return_items_intent.putExtra(EXTRA_REPLY, "Bread"); setResult(RESULT_OK, return_items_intent); finish();
+                break;
+            case R.id.water_button:
+                return_items_intent.putExtra(EXTRA_REPLY, "Water"); setResult(RESULT_OK, return_items_intent); finish();
+                break;
+            case R.id.egg_button:
+                return_items_intent.putExtra(EXTRA_REPLY, "Eggs"); setResult(RESULT_OK, return_items_intent); finish();
+                break;
+            case R.id.cheese_button:
+                return_items_intent.putExtra(EXTRA_REPLY, "Cheese"); setResult(RESULT_OK, return_items_intent); finish();
+                break;
+            default:
+                Toast.makeText(SecondActivity.this, "There was an error", Toast.LENGTH_LONG).show();
+                break;
+        }
+
     }
 
     @Override
